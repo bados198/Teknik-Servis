@@ -1,0 +1,429 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="TeknikServisModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="arizaTablosu">
+          <Key>
+            <PropertyRef Name="arizaId" />
+          </Key>
+          <Property Name="arizaId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="modelFkId" Type="int" Nullable="false" />
+          <Property Name="musteriFkId" Type="int" Nullable="false" />
+          <Property Name="arizaNedeni" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="arizaGelisTar" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="markaTablosu">
+          <Key>
+            <PropertyRef Name="markaId" />
+          </Key>
+          <Property Name="markaId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="markaAdi" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="modelTablosu">
+          <Key>
+            <PropertyRef Name="modelId" />
+          </Key>
+          <Property Name="modelId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="urunTuruFkId" Type="int" Nullable="false" />
+          <Property Name="markaFkId" Type="int" Nullable="false" />
+          <Property Name="modelSeri" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="modelAdi" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="musteriTablosu">
+          <Key>
+            <PropertyRef Name="musteriId" />
+          </Key>
+          <Property Name="musteriId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="musteriAdSoyad" Type="varchar" MaxLength="60" Nullable="false" />
+          <Property Name="musteriTel" Type="varchar" MaxLength="11" Nullable="false" />
+          <Property Name="musteriAdr" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="onarimTablosu">
+          <Key>
+            <PropertyRef Name="onarimId" />
+          </Key>
+          <Property Name="onarimId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="arizaFkId" Type="int" Nullable="false" />
+          <Property Name="onarimNedeni" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="onarimTeshisTar" Type="datetime" Nullable="false" />
+          <Property Name="onarimTar" Type="datetime" Nullable="false" />
+          <Property Name="onarimUcret" Type="varchar" MaxLength="8" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="urunTuruTablosu">
+          <Key>
+            <PropertyRef Name="urunTuruId" />
+          </Key>
+          <Property Name="urunTuruId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="urunTuruAdi" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_arizaTablosu_modelTablosu">
+          <End Role="modelTablosu" Type="Self.modelTablosu" Multiplicity="1" />
+          <End Role="arizaTablosu" Type="Self.arizaTablosu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="modelTablosu">
+              <PropertyRef Name="modelId" />
+            </Principal>
+            <Dependent Role="arizaTablosu">
+              <PropertyRef Name="modelFkId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_arizaTablosu_musteriTablosu">
+          <End Role="musteriTablosu" Type="Self.musteriTablosu" Multiplicity="1" />
+          <End Role="arizaTablosu" Type="Self.arizaTablosu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="musteriTablosu">
+              <PropertyRef Name="musteriId" />
+            </Principal>
+            <Dependent Role="arizaTablosu">
+              <PropertyRef Name="musteriFkId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_modelTablosu_markaTablosu">
+          <End Role="markaTablosu" Type="Self.markaTablosu" Multiplicity="1" />
+          <End Role="modelTablosu" Type="Self.modelTablosu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="markaTablosu">
+              <PropertyRef Name="markaId" />
+            </Principal>
+            <Dependent Role="modelTablosu">
+              <PropertyRef Name="markaFkId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_modelTablosu_urunTuruTablosu">
+          <End Role="urunTuruTablosu" Type="Self.urunTuruTablosu" Multiplicity="1" />
+          <End Role="modelTablosu" Type="Self.modelTablosu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="urunTuruTablosu">
+              <PropertyRef Name="urunTuruId" />
+            </Principal>
+            <Dependent Role="modelTablosu">
+              <PropertyRef Name="urunTuruFkId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_onarimTablosu_arizaTablosu">
+          <End Role="arizaTablosu" Type="Self.arizaTablosu" Multiplicity="1" />
+          <End Role="onarimTablosu" Type="Self.onarimTablosu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="arizaTablosu">
+              <PropertyRef Name="arizaId" />
+            </Principal>
+            <Dependent Role="onarimTablosu">
+              <PropertyRef Name="arizaFkId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TeknikServisModelStoreContainer">
+          <EntitySet Name="arizaTablosu" EntityType="Self.arizaTablosu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="markaTablosu" EntityType="Self.markaTablosu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="modelTablosu" EntityType="Self.modelTablosu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="musteriTablosu" EntityType="Self.musteriTablosu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="onarimTablosu" EntityType="Self.onarimTablosu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="urunTuruTablosu" EntityType="Self.urunTuruTablosu" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_arizaTablosu_modelTablosu" Association="Self.FK_arizaTablosu_modelTablosu">
+            <End Role="modelTablosu" EntitySet="modelTablosu" />
+            <End Role="arizaTablosu" EntitySet="arizaTablosu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_arizaTablosu_musteriTablosu" Association="Self.FK_arizaTablosu_musteriTablosu">
+            <End Role="musteriTablosu" EntitySet="musteriTablosu" />
+            <End Role="arizaTablosu" EntitySet="arizaTablosu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_modelTablosu_markaTablosu" Association="Self.FK_modelTablosu_markaTablosu">
+            <End Role="markaTablosu" EntitySet="markaTablosu" />
+            <End Role="modelTablosu" EntitySet="modelTablosu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_modelTablosu_urunTuruTablosu" Association="Self.FK_modelTablosu_urunTuruTablosu">
+            <End Role="urunTuruTablosu" EntitySet="urunTuruTablosu" />
+            <End Role="modelTablosu" EntitySet="modelTablosu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_onarimTablosu_arizaTablosu" Association="Self.FK_onarimTablosu_arizaTablosu">
+            <End Role="arizaTablosu" EntitySet="arizaTablosu" />
+            <End Role="onarimTablosu" EntitySet="onarimTablosu" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TeknikServisModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="arizaTablosu">
+          <Key>
+            <PropertyRef Name="arizaId" />
+          </Key>
+          <Property Name="arizaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="modelFkId" Type="Int32" Nullable="false" />
+          <Property Name="musteriFkId" Type="Int32" Nullable="false" />
+          <Property Name="arizaNedeni" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="arizaGelisTar" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="modelTablosu" Relationship="Self.FK_arizaTablosu_modelTablosu" FromRole="arizaTablosu" ToRole="modelTablosu" />
+          <NavigationProperty Name="musteriTablosu" Relationship="Self.FK_arizaTablosu_musteriTablosu" FromRole="arizaTablosu" ToRole="musteriTablosu" />
+          <NavigationProperty Name="onarimTablosu" Relationship="Self.FK_onarimTablosu_arizaTablosu" FromRole="arizaTablosu" ToRole="onarimTablosu" />
+        </EntityType>
+        <EntityType Name="markaTablosu">
+          <Key>
+            <PropertyRef Name="markaId" />
+          </Key>
+          <Property Name="markaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="markaAdi" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="modelTablosu" Relationship="Self.FK_modelTablosu_markaTablosu" FromRole="markaTablosu" ToRole="modelTablosu" />
+        </EntityType>
+        <EntityType Name="modelTablosu">
+          <Key>
+            <PropertyRef Name="modelId" />
+          </Key>
+          <Property Name="modelId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="urunTuruFkId" Type="Int32" Nullable="false" />
+          <Property Name="markaFkId" Type="Int32" Nullable="false" />
+          <Property Name="modelSeri" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="modelAdi" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="arizaTablosu" Relationship="Self.FK_arizaTablosu_modelTablosu" FromRole="modelTablosu" ToRole="arizaTablosu" />
+          <NavigationProperty Name="markaTablosu" Relationship="Self.FK_modelTablosu_markaTablosu" FromRole="modelTablosu" ToRole="markaTablosu" />
+          <NavigationProperty Name="urunTuruTablosu" Relationship="Self.FK_modelTablosu_urunTuruTablosu" FromRole="modelTablosu" ToRole="urunTuruTablosu" />
+        </EntityType>
+        <EntityType Name="musteriTablosu">
+          <Key>
+            <PropertyRef Name="musteriId" />
+          </Key>
+          <Property Name="musteriId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="musteriAdSoyad" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="musteriTel" Type="String" MaxLength="11" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="musteriAdr" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="arizaTablosu" Relationship="Self.FK_arizaTablosu_musteriTablosu" FromRole="musteriTablosu" ToRole="arizaTablosu" />
+        </EntityType>
+        <EntityType Name="onarimTablosu">
+          <Key>
+            <PropertyRef Name="onarimId" />
+          </Key>
+          <Property Name="onarimId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="arizaFkId" Type="Int32" Nullable="false" />
+          <Property Name="onarimNedeni" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="onarimTeshisTar" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="onarimTar" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="onarimUcret" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="arizaTablosu" Relationship="Self.FK_onarimTablosu_arizaTablosu" FromRole="onarimTablosu" ToRole="arizaTablosu" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="urunTuruTablosu">
+          <Key>
+            <PropertyRef Name="urunTuruId" />
+          </Key>
+          <Property Name="urunTuruId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="urunTuruAdi" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="modelTablosu" Relationship="Self.FK_modelTablosu_urunTuruTablosu" FromRole="urunTuruTablosu" ToRole="modelTablosu" />
+        </EntityType>
+        <Association Name="FK_arizaTablosu_modelTablosu">
+          <End Role="modelTablosu" Type="Self.modelTablosu" Multiplicity="1" />
+          <End Role="arizaTablosu" Type="Self.arizaTablosu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="modelTablosu">
+              <PropertyRef Name="modelId" />
+            </Principal>
+            <Dependent Role="arizaTablosu">
+              <PropertyRef Name="modelFkId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_arizaTablosu_musteriTablosu">
+          <End Role="musteriTablosu" Type="Self.musteriTablosu" Multiplicity="1" />
+          <End Role="arizaTablosu" Type="Self.arizaTablosu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="musteriTablosu">
+              <PropertyRef Name="musteriId" />
+            </Principal>
+            <Dependent Role="arizaTablosu">
+              <PropertyRef Name="musteriFkId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_onarimTablosu_arizaTablosu">
+          <End Role="arizaTablosu" Type="Self.arizaTablosu" Multiplicity="1" />
+          <End Role="onarimTablosu" Type="Self.onarimTablosu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="arizaTablosu">
+              <PropertyRef Name="arizaId" />
+            </Principal>
+            <Dependent Role="onarimTablosu">
+              <PropertyRef Name="arizaFkId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_modelTablosu_markaTablosu">
+          <End Role="markaTablosu" Type="Self.markaTablosu" Multiplicity="1" />
+          <End Role="modelTablosu" Type="Self.modelTablosu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="markaTablosu">
+              <PropertyRef Name="markaId" />
+            </Principal>
+            <Dependent Role="modelTablosu">
+              <PropertyRef Name="markaFkId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_modelTablosu_urunTuruTablosu">
+          <End Role="urunTuruTablosu" Type="Self.urunTuruTablosu" Multiplicity="1" />
+          <End Role="modelTablosu" Type="Self.modelTablosu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="urunTuruTablosu">
+              <PropertyRef Name="urunTuruId" />
+            </Principal>
+            <Dependent Role="modelTablosu">
+              <PropertyRef Name="urunTuruFkId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TeknikServisEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="arizaTablosu" EntityType="Self.arizaTablosu" />
+          <EntitySet Name="markaTablosu" EntityType="Self.markaTablosu" />
+          <EntitySet Name="modelTablosu" EntityType="Self.modelTablosu" />
+          <EntitySet Name="musteriTablosu" EntityType="Self.musteriTablosu" />
+          <EntitySet Name="onarimTablosu" EntityType="Self.onarimTablosu" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="urunTuruTablosu" EntityType="Self.urunTuruTablosu" />
+          <AssociationSet Name="FK_arizaTablosu_modelTablosu" Association="Self.FK_arizaTablosu_modelTablosu">
+            <End Role="modelTablosu" EntitySet="modelTablosu" />
+            <End Role="arizaTablosu" EntitySet="arizaTablosu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_arizaTablosu_musteriTablosu" Association="Self.FK_arizaTablosu_musteriTablosu">
+            <End Role="musteriTablosu" EntitySet="musteriTablosu" />
+            <End Role="arizaTablosu" EntitySet="arizaTablosu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_onarimTablosu_arizaTablosu" Association="Self.FK_onarimTablosu_arizaTablosu">
+            <End Role="arizaTablosu" EntitySet="arizaTablosu" />
+            <End Role="onarimTablosu" EntitySet="onarimTablosu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_modelTablosu_markaTablosu" Association="Self.FK_modelTablosu_markaTablosu">
+            <End Role="markaTablosu" EntitySet="markaTablosu" />
+            <End Role="modelTablosu" EntitySet="modelTablosu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_modelTablosu_urunTuruTablosu" Association="Self.FK_modelTablosu_urunTuruTablosu">
+            <End Role="urunTuruTablosu" EntitySet="urunTuruTablosu" />
+            <End Role="modelTablosu" EntitySet="modelTablosu" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TeknikServisModelStoreContainer" CdmEntityContainer="TeknikServisEntities">
+          <EntitySetMapping Name="arizaTablosu">
+            <EntityTypeMapping TypeName="TeknikServisModel.arizaTablosu">
+              <MappingFragment StoreEntitySet="arizaTablosu">
+                <ScalarProperty Name="arizaId" ColumnName="arizaId" />
+                <ScalarProperty Name="modelFkId" ColumnName="modelFkId" />
+                <ScalarProperty Name="musteriFkId" ColumnName="musteriFkId" />
+                <ScalarProperty Name="arizaNedeni" ColumnName="arizaNedeni" />
+                <ScalarProperty Name="arizaGelisTar" ColumnName="arizaGelisTar" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="markaTablosu">
+            <EntityTypeMapping TypeName="TeknikServisModel.markaTablosu">
+              <MappingFragment StoreEntitySet="markaTablosu">
+                <ScalarProperty Name="markaId" ColumnName="markaId" />
+                <ScalarProperty Name="markaAdi" ColumnName="markaAdi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="modelTablosu">
+            <EntityTypeMapping TypeName="TeknikServisModel.modelTablosu">
+              <MappingFragment StoreEntitySet="modelTablosu">
+                <ScalarProperty Name="modelId" ColumnName="modelId" />
+                <ScalarProperty Name="urunTuruFkId" ColumnName="urunTuruFkId" />
+                <ScalarProperty Name="markaFkId" ColumnName="markaFkId" />
+                <ScalarProperty Name="modelSeri" ColumnName="modelSeri" />
+                <ScalarProperty Name="modelAdi" ColumnName="modelAdi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="musteriTablosu">
+            <EntityTypeMapping TypeName="TeknikServisModel.musteriTablosu">
+              <MappingFragment StoreEntitySet="musteriTablosu">
+                <ScalarProperty Name="musteriId" ColumnName="musteriId" />
+                <ScalarProperty Name="musteriAdSoyad" ColumnName="musteriAdSoyad" />
+                <ScalarProperty Name="musteriTel" ColumnName="musteriTel" />
+                <ScalarProperty Name="musteriAdr" ColumnName="musteriAdr" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="onarimTablosu">
+            <EntityTypeMapping TypeName="TeknikServisModel.onarimTablosu">
+              <MappingFragment StoreEntitySet="onarimTablosu">
+                <ScalarProperty Name="onarimId" ColumnName="onarimId" />
+                <ScalarProperty Name="arizaFkId" ColumnName="arizaFkId" />
+                <ScalarProperty Name="onarimNedeni" ColumnName="onarimNedeni" />
+                <ScalarProperty Name="onarimTeshisTar" ColumnName="onarimTeshisTar" />
+                <ScalarProperty Name="onarimTar" ColumnName="onarimTar" />
+                <ScalarProperty Name="onarimUcret" ColumnName="onarimUcret" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="TeknikServisModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="urunTuruTablosu">
+            <EntityTypeMapping TypeName="TeknikServisModel.urunTuruTablosu">
+              <MappingFragment StoreEntitySet="urunTuruTablosu">
+                <ScalarProperty Name="urunTuruId" ColumnName="urunTuruId" />
+                <ScalarProperty Name="urunTuruAdi" ColumnName="urunTuruAdi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

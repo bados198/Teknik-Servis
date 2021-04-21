@@ -1,0 +1,72 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="anaMenu.master.cs" Inherits="TeknikServis.anaMenu" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <title>BCE Bilgisayar Teknik Servis Takip</title>
+    <link rel="stylesheet" href="Tasarımlar/anaMenu.css">
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div id="anaMenu" style="width:100%; height:90px; overflow:hidden;">
+        <nav class="menu">
+                <ul>
+                <li><a href="anaSayfa.aspx">Ana Sayfa</a></li>
+                <li><a href="#">Ürün Türleri</a>
+                    <ul>
+                        <li><a href="urunTuruEkle.aspx">Ürün Türü Ekle</a></li>
+                        <li><a href="urunTuruGoster.aspx">Ürün Türlerini Göster</a></li>
+                        
+                        <li></li>
+                        
+                    </ul>  
+                </li>
+
+                <li><a href="#">Markalar</a>
+                     <ul>
+                        <li><a href="markaEkle.aspx">Marka Ekle</a></li>
+                        <li><a href="markaGoster.aspx">Markaları Göster</a></li>                        
+                    </ul>  
+                </li>
+
+                <li><a href="#">Modeller</a>
+                    <ul>
+                         <li><a href="modelEkle.aspx">Model Ekle</a></li>
+                        <li><a href="modelGoster.aspx">Modelleri Göster</a></li>                       
+                    </ul>  
+                </li
+                    >
+                <li><a href="#">Müşteriler</a>
+                     <ul>
+                        <li><a href="musteriEkle.aspx">Müşteri Ekle</a></li>
+                        <li><a href="musteriGoster.aspx">Müşterileri Göster</a></li>                        
+                    </ul>  
+                </li>
+
+                <li><a href="#">Arızalı Ürün Girişi</a>
+                    <ul>
+                         <li><a href="arizaliUrunEkle.aspx">Arızalı Ürün Ekle</a></li>
+                        <li><a href="arizaliUrunGoster.aspx">Arızalı Ürünleri Göster</a></li>                       
+                    </ul>  
+                 </li>
+
+                    <li><a href="#">Onarım Kayıtları</a>
+                    <ul>
+                         <li><a href="arizaOnarimEkle.aspx">Onarım Ekle</a></li>
+                        <li><a href="arizaOnarimGoster.aspx">Onarılan Ürünleri Göster</a></li>                       
+                    </ul>  
+                 </li>
+                <li><a href="GirisEkrani.aspx">Çıkış</a></li>
+                </ul>                            
+            </nav> 
+        </div>
+
+        <div id="icerik">
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server"></asp:ContentPlaceHolder>
+        </div>
+    </form>
+</body>
+</html>
